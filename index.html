@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medication Adherence Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        #calculator {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #result {
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <h2>Medication Adherence Calculator</h2>
+    <div class="input-group">
+        <label for="total-refills">Total Number of Refills:</label>
+        <input id="total-refills" type="number" min="1" required>
+    </div>
+    <div class="input-group">
+        <label for="missed-refills">Number of Missed Refills:</label>
+        <input id="missed-refills" type="number" min="0" required>
+    </div>
+    <div class="input-group">
+        <label for="time-period">Time Period (in months):</label>
+        <input id="time-period" type="number" min="1" required>
+    </div>
+    <div class="input-group">
+        <label for="dosing-frequency">Dosing Frequency:</label>
+        <select id="dosing-frequency">
+            <option value="once-daily">Once Daily</option>
+            <option value="twice-daily">Twice Daily</option>
+            <option value="thrice-daily">Thrice Daily</option>
+            <option value="four-times-daily">Four Times Daily</option>
+            <option value="five-times-daily">Five Times Daily</option>
+            <option value="six-times-daily">Six Times Daily</option>
+            <option value="seven-times-daily">Seven Times Daily</option>
+            <option value="eight-times-daily">Eight Times Daily</option>
+            <option value="nine-times-daily">Nine Times Daily</option>
+            <option value="ten-times-daily">Ten Times Daily</option>
+            <option value="once-weekly">Once Weekly</option>
+            <option value="twice-weekly">Twice Weekly</option>
+            <option value="thrice-weekly">Thrice Weekly</option>
+            <option value="four-times-weekly">Four Times Weekly</option>
+            <option value="five-times-weekly">Five Times Weekly</option>
+            <option value="six-times-weekly">Six Times Weekly</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label for="medication-form">Medication Form:</label>
+        <select id="medication-form">
+            <option value="tablet">Tablet</option>
+            <option value="capsule">Capsule</option>
+            <option value="oral-solution">Oral Solution</option>
+            <option value="injection">Injection</option>
+            <option value="topical">Topical</option>
+        </select>
+    </div>
+    <button onclick="calculateAdherence()">Calculate Adherence</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    function calculateAdherence() {
+        var totalRefills = parseInt(document.getElementById("total-refills").value);
+        var missedRefills = parseInt(document.getElementById("missed-refills").value);
+        var timePeriod = parseInt(document.getElementById("time-period").value);
+        var dosingFrequency = document.getElementById("dosing-frequency").value;
+        var medicationForm = document.getElementById("medication-form").value;
+
+        if (isNaN(totalRefills) || isNaN(missedRefills) || isNaN(timePeriod)) {
+            document.getElementById("result").innerText = "Please enter valid numbers.";
+            return;
+        }
+
+        var totalDoses = timePeriod * getDosesPerPeriod(dosingFrequency);
+        var missedDoses = (missedRefills / totalRefills) * totalDoses;
+        var adherencePercentage = ((totalDoses - missedDoses) / totalDoses) * 100;
+        document.getElementById("result").innerText = "Medication Adherence: " + adherencePercentage.toFixed(2) + "%";
+    }
+
+    function getDosesPerPeriod(dosingFrequency) {
+        switch (dosingFrequency) {
+            case "once-daily":
+                return 1;
+            case "twice-daily":
+                return 2;
+            case "thrice-daily":
+                return 3;
+            case "four-times-daily":
+                return 4;
+            case "five-times-daily":
+                return 5;
+            case "six-times-daily":
+                return 6;
+            case "seven-times-daily":
+                return 7;
+            case "eight-times-daily":
+                return 8;
+            case "nine-times-daily":
+                return 9;
+            case "ten-times-daily":
+                return 10;
+            case "once-weekly":
+                return 1;
+            case "twice-weekly":
+                return 2;
+            case "thrice-weekly":
+                return 3;
+            case "four-times-weekly":
+                return 4;
+            case "five-times-weekly":
+                return 5;
+            case "six-times-weekly":
+                return 6;
+            default:
+                return 1;
+        }
+    }
+</script>
+
+</body>
+</html>
